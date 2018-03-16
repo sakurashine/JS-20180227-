@@ -1,0 +1,438 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>前端练习</title>
+<style>
+body{ overflow-x:hidden; }
+.project{ width:1260px; height:auto; border:1px #e23a6e solid; margin:20px; padding:0 20px 20px 20px;}
+xmp,h2,h3{ color:#e23a6e; font-family:Arial; }
+
+/*仿IOS开关*/
+.iosBtn{ position:relative; width:100px; height:50px; background-color:#4dd865; border-radius:25px 25px 25px 25px; box-shadow:0 0 1px #ccc inset;}
+
+#iosBtn_circle{ position:absolute; width:50px;height:50px; background-color:#FFF; border-radius:25px; right:1px; box-shadow:0 2px 2px #ccc;}
+
+.iosBtn{ cursor:pointer; }
+
+@keyframes colorMoveLeft{
+	from{ background-color:#4dd865;}
+	to{ background-color:#FFF; }
+}
+
+@keyframes colorMoveRight{
+	from{ background-color:#FFF;}
+	to{ background-color:#4dd865; }
+}
+
+@keyframes XMoveLeft{
+	from{ right:1px; }
+	to{ right:50px; }
+}
+
+@keyframes XMoveRight{
+	from{ right:50px; }
+	to{ right:1px; }
+}
+
+/*background-position用法*/
+.bili_icons{
+	position:relative;
+	width:1600px;
+	height:2444px;
+	background-image:url('./icons.png');
+	background-repeat:no-repeat;
+
+}
+
+.cut_bili_icon{
+	position:relative;
+	width:24px;
+	height:22px;
+	background-image:url('./icons.png');
+	background-position:-654px -1170px;/*注意取负值*/
+}
+/*用css做轮播图*/
+.carousel{
+	position:relative;
+	width:440px;
+	height:220px;
+	overflow:hidden;
+}
+.panel{
+	position:relative;
+	width:2200px;
+	height:220px;
+	animation:carousel 20s linear infinite;
+}
+@keyframes carousel{
+	0%,20% {        margin-left: 0px;       }
+    25%,45% {       margin-left: -440px;    }
+    50%,70% {       margin-left: -880px;    }
+    75%,95% {       margin-left: -1320px;    }
+}
+.panel ul{
+	position:relative;
+	width:2200px;
+	height:220px;
+	float:left;
+	margin:0;
+	padding:0;
+}
+.panel ul li{
+	position:relative;
+	float:left;
+	list-style:none;
+	width:440px;
+	height:220px;
+}
+#horl2:hover{
+	color:white;
+}
+#horl2:link{
+	color:yellow;
+}
+/*css实现半圆*/
+.halfCicle{
+	width:160px;
+	height:160px;
+	border-radius:160px 0 0 0;
+	background-color:#e23a6e;
+}
+</style>
+<script src="./jquery-2.2.4.min.js" ></script>
+<script type="text/javascript">
+	window.onload=function(){
+		HTMLElement.prototype.__defineGetter__("currentStyle", function () { return this.ownerDocument.defaultView.getComputedStyle(this, null); 
+		});
+
+		var circle = document.getElementById("iosBtn_circle");
+		var btn = document.getElementsByClassName("iosBtn")[0];
+		circle.onclick = function(){
+			if(String(this.currentStyle.right)=='1px'){
+				circle.style.animation = 'XMoveLeft .2s linear 1 forwards';
+				btn.style.animation = 'colorMoveLeft .2s linear 1 forwards';
+			}
+			else{
+				circle.style.animation = 'XMoveRight .2s linear 1 forwards';
+				btn.style.animation = 'colorMoveRight .2s linear 1 forwards';
+			}
+		}
+
+		//创建a标签
+		// var btn = document.getElementById("createA");
+		var square = document.getElementsByClassName("createA")[0];
+		
+		
+		
+		for(var i=1;i<=10;i++){
+			(function(i){
+				var a = document.createElement('a');
+				a.innerHTML=i+'<br>';
+				document.getElementsByClassName('createA')[0].appendChild(a);
+				a.addEventListener('click',function(e){
+	                e.preventDefault();  //取消默认事件，指a标签
+	                alert(i);
+	            });
+			})(i);//IIFE闭包
+		}
+		
+	}
+	
+</script>
+<!-- <script type="text/javascript">
+$(document).ready(function(){
+  $("#b01").click(function(){
+  htmlobj=$.ajax({url:"data.txt",async:false});
+  $("#myDiv").html(htmlobj.responseText);
+  });
+});
+</script> -->
+</head>
+<body>
+	<div class="catalog">
+
+	</div>
+	<div class="project">
+    	<h2>图片懒加载</h2>
+    	<img id="lazyImg" src="./preview.jpg" data-realsrc="http://i1.bvimg.com/562414/d0480f94af787ba7.jpg"/>
+    </div>
+    <script>
+    	var lazyImg = document.getElementById('lazyImg');
+    	lazyImg.src = lazyImg.getAttribute('data-realsrc');
+    	//为什么没效果？？preview.jpg并不会显示
+    </script>
+	<div class="project">
+		<h2>仿IOS开关</h2>
+		<div class="iosBtn">
+			<div id="iosBtn_circle"></div>
+		</div>
+	</div>
+	<div class="project">
+		<h2>background-position用法</h2>
+		<div class="bili_icons"></div>
+		<p>以下是裁剪出需要的部分</p>
+		<div class="cut_bili_icon"></div>
+	</div>
+	<div class="project">
+		<h2>用CSS做轮播图</h2>
+		<div class="carousel">
+			<div class="panel">
+				<ul>
+					<li><img src="374f158fd2c4f5edfb5a061077730c6d5d31249c.jpg" /></li>
+					<li><img src="646d2bfc4e1a323e4be028c5469cd4d874ecf9d5.jpg" /></li>
+					<li><img src="43077f70678d06e57a19b96feb6390d931bf4634.jpg" /></li>
+					<li><img src="bb095e3f07d5358a4bba5830fc976def0ce94362.jpg" /></li>
+					<li><img src="da93b94633e1da9b00a076865395a6132a388bb2.jpg" /></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="project">
+		<h2>图片button</h2>
+		<input type="submit" value="" style="width:40px;height:32px;background-color:hsla(0,0%,100%,.88);background-image:url('./icons.png');background-repeat:no-repeat;background-position:-657px -723px;border:none;" />
+	</div>
+	<div class="project">
+		<h2>笔记</h2>
+		<h3><pre><xmp>
+		jQuery是一个类数组对象，而DOM对象就是一个单独的DOM元素。
+		jQuery对象自身提供一个.get() 方法允许我们直接访问jQuery
+		对象中相关的DOM节点，get方法中提供一个元素的索引：
+
+		var $div = $('div') //jQuery对象
+		var div = $div.get(0) //通过get方法，转化成DOM对象
+		div.style.color = 'red' //操作dom对象的属性
+
+		比如这个：
+		<body>
+	        <div id="divtest">
+	            <div class="title">
+	                <span class="fl">我最爱吃的水果</span> 
+	                <span class="fr">
+	                    <input id="btnShow" type="button" value="加载" />
+	                </span>
+	            </div>
+	            <ul></ul>
+	        </div>
+	        
+	        <script type="text/javascript">
+	            $(function () {
+	                $("#btnShow").bind("click", function () {
+	                    var $this = $(this);
+	                    $("ul")
+	                    .html("<img src='Images/Loading.gif' alt=''/>")
+	                    .load('https://www.imooc.com/data/fruit_part.html',function(){
+	                        alert($this.val())
+	                        //$(this).attr("disabled", "true");
+	                    }) ;
+	                })
+	            });
+	        </script>
+	    </body>
+    	用$this保存当前对象$(this)，即<input id="btnShow" type="
+    	button" value="加载" />，$this就是一个普通的对象名，当然也
+    	可以叫$abc。变量名之所以不叫做this，要叫$this，多一个$，是
+    	因为1.变量名的首字母可以是_或$或字母；2.以$为首字母可以标识
+    	这是一个jQuery变量，它可以使用jQuery的方法。
+    	这样，后面的alert($this.val()，能得到值“加载”
+    	而alert($(this)).val()却不能，因为此时的对象已经不是<input id="btnShow" type="
+    	button" value="加载" />了
+		</xmp></pre></h3>
+		<!-- xmp标签内的所有标签显示为文本 -->
+	</div>
+	<div class="project">
+		<h2>调用json文件的数据</h2>
+		<div id="divtest">
+            <div class="title">
+                <span class="fl">我最喜欢的一项运动</span> 
+                <span class="fr">
+                    <input id="btnShow" type="button" value="加载" />
+                </span>
+            </div>
+            <ul></ul>
+        </div>
+		<ul>
+
+		</ul>
+	</div>
+	<script type="text/javascript">
+            $(function () {
+                $("#btnShow").bind("click", function () {
+                    var $this = $(this);
+                    $.getJSON('./data.json',function(data){//回调函数
+                        $this.attr("disabled", "true");  //当前按钮禁用
+                        $.each(data, function (index, sport) {  //$.each(collection,callback)  迭代函数 具体用法找度娘
+                            if(index==3) 
+                            $("ul").append("<li>" + sport["name"] + "</li>");  
+                        });
+                    });
+                })
+            });
+        </script>
+    <div class="project">
+    	<h2>调用txt文件</h2>
+    	<div id="myDiv"><h2>通过 AJAX 改变文本</h2></div>
+<button id="b01" type="button">改变内容</button>
+    </div>
+    <div class="project">
+    	<h2>JS创建10个a标签，点击a标签弹出对应序号（作用域）</h2>
+    	<input type="submit" value="创建a标签" id="createA" />
+    	<div class="createA">
+
+    	</div>
+    </div>
+    <div class="project">
+    	<h2>生成随机数，每个数的位数都是一致的</h2>
+    	<p>动态获取文本框的值是不是要用ajax？</p>
+    	<input type="text" placeholder="位数" id="ranNumA" />
+    	<input type="submit" value="生成" id="ranNumB" />
+    	<p id="p"></p>
+    </div>
+    <script>
+    	var ranNumA = document.getElementById('ranNumA');
+    	var ranNumB = document.getElementById('ranNumB');
+    	var p = document.getElementById('p');
+    	var val = ranNumA.value;
+    	ranNumB.addEventListener("click",function(){
+    		//alert(val);
+    		p.innerHTML = String(1e2 * Math.random()).slice(1,10);
+    	})
+    	
+    	
+    </script>
+    <div class="project">
+    	<h2>注意两个p之间有空文本（看console）</h2>
+    	<div id="div1">
+    		<p>text1</p>
+    		<p>text2</p>
+    	</div>
+    	<a id="texta" href="http://www.baidu.com/">喵喵</a>
+    	<xmp>
+			如果写成<div id="div1"><p>text1</p><p>text2</p></div>就没毛病了
+    	</xmp>
+    </div>
+    <script>
+    	var div1 = document.getElementById('div1');
+    	console.log(div1.childNodes);
+    	//NodeList(5)0: text 1: p 2: text 3: p 4: text
+    	// setTimeout(function(){
+    	// 	location.href='http://www.baidu.com/';
+    	// },2000);//这个是改变页面href
+    	function bindEvent(elem, type, fn, selector){
+    		//封装事件绑定函数
+    		var target
+    		if(selector){//代理
+    			elem.addEventListener(type, function(e){
+    				target = e.target
+    				if(target.matches(selector)){
+    					fn.call(target, e)
+    				}
+    			})
+    		} else {//非代理
+    			selector = null
+    			elem.addEventListener(type, fn);
+    		}
+    	}
+    	var texta = document.getElementById('texta');
+    	bindEvent(texta,'click',function(e){
+    		e.preventDefault();//功能是阻止对象的默认事件，此处的作用是阻止了a标签的默认事件：跳转页面
+    		alert(123)
+    	});
+    </script>
+
+    <div class='project'>
+    	<h2>事件冒泡</h2>
+    	<div class="bubble">
+    		<p id="bub">
+    			<span id="bo">按顺序往上触发事件</span>
+    		</p>
+    	</div>
+
+    </div>
+    <script>
+    	var bubble = document.getElementsByClassName('bubble')[0];
+    	var bub = document.getElementById('bub');
+    	var bo = document.getElementById('bo');
+    	bindEvent(bubble,'click',function(){//最后触发
+    		alert(this.nodeName)
+    	});
+    	bindEvent(bub,'click',function(){//其次触发
+    		alert(this.nodeName)
+    	});
+    	bindEvent(bo,'click',function(e){//最先触发
+    		//e.stopPropagation();
+    		alert(this.nodeName)
+    	});
+    </script>
+    <div class="project">
+    	<h2>代理</h2>
+    	<div id="agent">
+    		<a href="http://www.imooc.com/">链接1</a>
+    		<a href="http://www.imooc.com/">链接2</a>
+    		<a href="http://www.imooc.com/">链接3</a>
+    		<a href="http://www.imooc.com/">链接4</a>
+    		<br />
+    		<p class="agentP" style="display:inline;">文本1</p>
+    		<p class="agentP">文本2</p>
+    	</div>
+    </div>
+    <script>
+    	var agent = document.getElementById('agent');
+    	bindEvent(agent,'click',function(e){
+    		e.preventDefault();
+    		alert(this.innerHTML);
+    	},'a');//代理（有第四个参数：代理对象）
+    	var agentP = document.getElementsByClassName('agentP')[0];
+    	bindEvent(agentP,'click',function(){
+    		alert(this.innerHTML);
+    	});//非代理
+    </script>
+    <div class="project">
+    	<h2>用JS写ajax请求过程(见后台)</h2>
+    </div>
+    <script>
+    	// var xhr = new XMLHttpRequest()
+    	// xhr.open("GET", "http://www.baidu.com/", true)//true代表异步，false代表同步
+    	// xhr.onreadystatechange = function(){
+    	// 	//此函数异步执行
+    	// 	if (xhr.readyState == 4){
+    	// 		if(xhr.status == 200){
+    	// 			console.log(xhr.responseText)
+    	// 		}
+    	// 	}
+    	// }
+    	// xhr.send(null)
+    </script>
+    <div class="project">
+    	<h2>事件节流</h2>
+    	<input type="text" id="text3" />
+    	<p>如果打字很快，不连续触发事件</p>
+    	<p id="p2"></p>
+    </div>
+    <script>
+    	var text3 = document.getElementById('text3')
+    	var p2 = document.getElementById('p2')
+    	var timeoutId
+    	text3.addEventListener('keyup',function(){
+    		if(timeoutId){
+    			clearTimeout(timeoutId)
+    		}
+    		timeoutId = setTimeout(function(){
+    			p2.innerHTML = Math.random()*10
+    		}, 400)
+    		
+    	})
+    </script>
+    <div class="project">
+    	<h2>:hover与:link</h2>
+    	<a id="horl">文本1</a>
+    	<a id="horl2">文本2</a>
+    </div>
+    <div class="project">
+    	<h2>CSS实现半圆、扇形</h2>
+    	<div class="halfCicle">
+    		
+    	</div>
+    </div>
+</body>
+
+</html>
